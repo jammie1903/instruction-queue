@@ -1,30 +1,39 @@
 package com.jamie.instruction.queue;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.jamie.instruction.queue.bean.InstructionMessage;
 
 public class InstructionQueue {
 
+	List<InstructionMessage> queue = new ArrayList<>();
+
 	public void enqueue(InstructionMessage message) {
-		// TODO
+		queue.add(message);
+		Collections.sort(queue);
 	}
 
 	public InstructionMessage dequeue() {
-		// TODO
-		return null;
+		if(isEmpty()) {
+			return null;
+		}
+		return queue.remove(0);
 	}
 
 	public InstructionMessage peek() {
-		// TODO
-		return null;
+		if (isEmpty()) {
+			return null;
+		}
+		return queue.get(0);
 	}
 
 	public int count() {
-		// TODO
-		return -1;
+		return queue.size();
 	}
 
 	public boolean isEmpty() {
-		// TODO
-		return false;
+		return queue.isEmpty();
 	}
 }

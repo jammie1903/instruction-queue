@@ -1,8 +1,9 @@
 package com.jamie.instruction.queue.bean;
 
 import java.util.Date;
+import java.util.Objects;
 
-public class InstructionMessage {
+public class InstructionMessage implements Comparable<InstructionMessage>{
 	private InstructionType instructionType;
 	private String productCode;
 	private Integer quantity;
@@ -47,5 +48,9 @@ public class InstructionMessage {
 
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public int compareTo(InstructionMessage other) {
+		return Integer.compare(this.instructionType.getPriorityVal(), other.instructionType.getPriorityVal());
 	}
 }

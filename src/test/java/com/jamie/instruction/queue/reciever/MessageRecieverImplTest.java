@@ -27,7 +27,7 @@ public class MessageRecieverImplTest {
 		try {
 			testInstance.recieve(instructionMessage);
 			fail("Exception not thrown");
-		} catch (UnsupportedOperationException e) {
+		} catch (IllegalArgumentException e) {
 			assertEquals(expectedException, e.getMessage());
 		}
 	}
@@ -91,7 +91,7 @@ public class MessageRecieverImplTest {
 
 	@Test
 	public void recieveInvalidUOMTooHighTest() {
-		runExceptionTest("InstructionMessage A AB12 1 257 2016-12-03T09:16:00.012Z", "UOM was not valid");
+		runExceptionTest("InstructionMessage A AB12 1 256 2016-12-03T09:16:00.012Z", "UOM was not valid");
 	}
 
 	@Test
@@ -122,7 +122,7 @@ public class MessageRecieverImplTest {
 	@Test
 	public void recieveValidMessageTest() throws ParseException {
 		ArgumentCaptor<InstructionMessage> messageCaptor = ArgumentCaptor.forClass(InstructionMessage.class);
-		testInstance.recieve("InstructionMessage A AB12 1 2 2016-12-03T09:28:00.012Z");
+		testInstance.recieve("InstructionMessage A AB12 1 2 2016­12­03T10:33:53.666Z");
 		verify(mockInstructionQueue).enqueue(messageCaptor.capture());
 		InstructionMessage message = messageCaptor.getValue();
 		assertEquals(InstructionType.A, message.getInstructionType());
@@ -130,7 +130,7 @@ public class MessageRecieverImplTest {
 		assertEquals(Integer.valueOf(1), message.getQuantity());
 		assertEquals(Integer.valueOf(2), message.getUOM());
 
-		Date expectedTimestamp = format.parse("2016-12-03T09:28:00.012Z");
+		Date expectedTimestamp = format.parse("2016­12­03T10:33:53.666Z");
 
 		assertEquals(expectedTimestamp, message.getTimestamp());
 	}
